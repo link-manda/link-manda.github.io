@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Imperial+Script&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@700&family=Inter:wght@400;500&display=swap"
         rel="stylesheet">
@@ -42,6 +43,12 @@
 
         .imperial-script-regular {
             font-family: 'Dancing Script', cursive;
+        }
+
+        .ephesis-regular {
+            font-family: "Ephesis", cursive;
+            font-weight: 400;
+            font-style: normal;
         }
 
         .font-serif {
@@ -129,15 +136,21 @@
     <div class="overflow-x-hidden">
         <!-- Background Music -->
         <audio id="background-music" loop>
-            <source src="music/gus-teja.mp3" type="audio/mpeg">
+            <source src="music/mahalini-bermuara.mp3" type="audio/mpeg">
         </audio>
 
         <!-- Cover Section -->
         <section id="cover"
-            class="fixed inset-0 bg-cover-image flex flex-col justify-end items-center text-center p-8 transition-opacity duration-1000 z-50">
+            class="fixed inset-0 bg-cover-image flex flex-col justify-between items-center text-center p-8 transition-opacity duration-1000 z-50">
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div class="relative z-10 text-white w-full">
-                <h1 class="imperial-script-regular text-5xl md:text-7xl mb-4">Aris & Qinar</h1>
+        
+            <!-- Bagian Atas: Nama Mempelai -->
+            <div class="relative z-10 text-white w-full pt-16 md:pt-24">
+                <h1 class="ephesis-regular text-5xl md:text-7xl mb-4">Aris & Qinar</h1>
+            </div>
+        
+            <!-- Bagian Bawah: Info & Tombol -->
+            <div class="relative z-10 text-white w-full pb-8">
                 <p class="font-serif text-lg">Undangan Pawiwahan</p>
                 <p class=" mb-2 text-sm">Kepada Bapak/Ibu/Saudara/i</p>
                 <h2 id="guest-name" class="font-serif text-2xl font-bold mb-8 truncate">Nama Tamu</h2>
@@ -146,7 +159,6 @@
                     Buka Undangan
                 </button>
             </div>
-            <div class="h-16"></div>
         </section>
 
         <!-- Main Content -->
@@ -156,9 +168,9 @@
                 class="relative min-h-screen bg-couple-image flex flex-col items-center justify-center text-center text-white p-8">
                 <div class="absolute inset-0 bg-black bg-opacity-40"></div>
                 <div class="relative z-10">
-                    <h2 class="imperial-script-regular text-5xl md:text-7xl">Aris & Qinar</h2>
+                    <h2 class="ephesis-regular text-5xl md:text-7xl">Aris & Qinar</h2>
                     <p class="font-serif text-xl mt-2">We are getting married</p>
-                    <p class="font-serif text-2xl mt-4">01 / 11 / 2025</p>
+                    <p class="font-serif text-2xl mt-4">01 / 10 / 2025</p>
                 </div>
                 <!-- SVG Wave -->
                 <div class="custom-shape-divider-bottom-1757340777">
@@ -180,7 +192,7 @@
             <!-- Sections: The Couple, Event Details, Countdown, Quotes, Gallery... -->
             <section class="py-5 px-8 text-center bg-white text-black relative z-10">
                 <div class="max-w-2xl mx-auto mb-10" data-aos="fade-up">
-                    <p class="imperial-script-regular text-4xl text-[#CFB577]">Om Swastyastu</p>
+                    <p class="ephesis-regular text-4xl text-[#CFB577]">Om Swastyastu</p>
                     <p class="mt-4 text-sm font-serif leading-relaxed">
                         Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa, kami bermaksud
                         mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri
@@ -191,18 +203,18 @@
                     <img src="img/6.jpg" alt="Mempelai Pria"
                         class="w-56 h-56 md:w-66 md:h-66 rounded-full mx-auto border-4 border-[#CFB577] shadow-xl">
                     <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
-                    <h3 class="imperial-script-regular text-4xl text-[#CFB577]">Aris</h3>
+                    <h3 class="ephesis-regular text-4xl text-[#CFB577]">Aris</h3>
                     <h4 class="font-serif text-2xl mt-2">I Putu Aris Ciptadaras, S.Ds</h4>
                     <p class="mt-2 font-serif italic text-sm">Putra pertama dari pasangan</p>
                     <p class="mt-2 font-semibold font-serif">Bpk. I Kadek Muliastra & Ibu. Made Sudarmi</p>
                     <p class="text-sm mt-1">Br. Gelulung, Ds. Sukawati, Kec. Sukawati, Kab. Gianyar</p>
                 </div>
-                <div class="text-5xl imperial-script-regular text-[#CFB577] my-8" data-aos="fade-in">&</div>
+                <div class="text-5xl ephesis-regular text-[#CFB577] my-8" data-aos="fade-in">&</div>
                 <div class="mb-20" data-aos="fade-up">
                     <img src="img/4.jpg" alt="Mempelai Wanita"
                         class="w-56 h-56 md:w-66 md:h-66 rounded-full mx-auto border-4 border-[#CFB577] shadow-xl">
                     <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
-                    <h3 class="imperial-script-regular text-4xl text-[#CFB577]">Qinar</h3>
+                    <h3 class="ephesis-regular text-4xl text-[#CFB577]">Qinar</h3>
                     <h4 class="font-serif text-2xl mt-2">Panji Putri Qinariati</h4>
                     <p class="mt-2 font-serif italic text-sm">Putri ketiga dari pasangan</p>
                     <p class="mt-2 font-semibold font-serif">Bpk. Thomy & Ibu. Ni Ketut Suartini</p>
@@ -235,7 +247,7 @@
                 </div>
             </section>
             <section class="py-20 px-8 text-black text-center bg-white">
-                <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-8" data-aos="fade-up">Hari Bahagia</h2>
+                <h2 class="ephesis-regular text-4xl text-[#CFB577] mb-8" data-aos="fade-up">Hari Bahagia</h2>
                 <div id="countdown" class="grid grid-cols-4 gap-4 max-w-sm mx-auto text-black" data-aos="fade-up"
                     data-aos-delay="200">
                     <div class="card p-4 rounded-lg bg-[#CFB577]">
@@ -273,7 +285,7 @@
                 </div>
             </section>
             <section class="py-20 px-4 text-center bg-white">
-                <h2 class="imperial-script-regular text-4xl mb-4 text-[#CFB577]" data-aos="fade-up">Momen Bahagia</h2>
+                <h2 class="ephesis-regular text-4xl mb-4 text-[#CFB577]" data-aos="fade-up">Momen Bahagia</h2>
                 <p class="max-w-xl mx-auto mb-10 font-serif text-black" data-aos="fade-up" data-aos-delay="100">Berikut
                     adalah beberapa momen kebahagiaan kami yang ingin kami bagikan.</p>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 max-w-4xl mx-auto" data-aos="fade-up"
@@ -294,7 +306,7 @@
             </section>
             <section class="py-20 px-8 bg-[#f7f4ef] text-center">
                 <div class="max-w-md mx-auto bg-white text-black shadow-lg rounded-2xl p-8" data-aos="fade-up">
-                    <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4">Amplop Digital</h2>
+                    <h2 class="ephesis-regular text-4xl text-[#CFB577] mb-4">Amplop Digital</h2>
                     <p class="mb-6 font-serif">Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.<br><br>
                         Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado cashless melalui
                         transfer.</p>
@@ -307,7 +319,7 @@
             <!-- NEW: Section Ucapan & Doa -->
             <section class="py-20 px-8 bg-white text-black text-center">
                 <div class="max-w-2xl mx-auto">
-                    <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4" data-aos="fade-up">Ucapan & Doa
+                    <h2 class="ephesis-regular text-4xl text-[#CFB577] mb-4" data-aos="fade-up">Ucapan & Doa
                         Restu</h2>
                     <p class="mb-8 font-serif" data-aos="fade-up" data-aos-delay="100">Kirimkan doa dan ucapan terbaik
                         Anda untuk kedua mempelai.</p>
@@ -348,8 +360,8 @@
                     <p class="mb-4">Silahkan melakukan transfer ke rekening berikut:</p>
                     <div class="border border-gray-300 rounded-lg p-4">
                         <h3 class="font-bold">BCA</h3>
-                        <p>0123456789 / a/n Sdr. I Putu Aris Ciptadaras</p>
-                        <button onclick="copyText('0123456789')"
+                        <p>3950589760 / a/n Ni Komang Panji Putri Qinariati</p>
+                        <button onclick="copyText('3950589760')"
                             class="mt-2 inline-block bg-[#cba352] text-white font-semibold py-2 px-4 rounded-full hover:bg-[#b89249]">Copy
                             No Rekening</button>
                     </div>
@@ -358,7 +370,7 @@
             <!-- ... (sisa kode HTML Anda) ... -->
             <section class="py-16 px-8 bg-white text-center">
                 <div class="max-w-xl mx-auto" data-aos="fade-up">
-                    <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4">Matur Suksma</h2>
+                    <h2 class="ephesis-regular text-4xl text-[#CFB577] mb-4">Matur Suksma</h2>
                 </div>
             </section>
             <button id="music-toggle"
