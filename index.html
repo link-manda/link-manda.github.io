@@ -178,7 +178,6 @@
             </section>
 
             <!-- Sections: The Couple, Event Details, Countdown, Quotes, Gallery... -->
-            <!-- ... (semua section dari kode Anda sebelumnya tetap di sini) ... -->
             <section class="py-5 px-8 text-center bg-white text-black relative z-10">
                 <div class="max-w-2xl mx-auto mb-10" data-aos="fade-up">
                     <p class="imperial-script-regular text-4xl text-[#CFB577]">Om Swastyastu</p>
@@ -390,12 +389,21 @@
     <script type="module">
         // Import fungsi yang diperlukan dari Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Konfigurasi Firebase Anda akan secara otomatis disediakan di sini
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // ⚠️ PENTING: Ganti dengan konfigurasi Firebase Anda sendiri!
+        // Salin objek firebaseConfig dari Firebase Console proyek Anda dan tempel di sini.
+        const firebaseConfig = {
+            apiKey: "AIzaSyCN5a1rEAcajX_UMSdQvnqRvDCOuzlE1-0",
+            authDomain: "undangan-aris-qinar.firebaseapp.com",
+            projectId: "undangan-aris-qinar",
+            storageBucket: "undangan-aris-qinar.firebasestorage.app",
+            messagingSenderId: "326431530536",
+            appId: "1:326431530536:web:ef26af80d681033dfddf1d",
+            measurementId: "G-0Y55HKTMC7"
+        };
+
 
         // Inisialisasi Firebase
         const app = initializeApp(firebaseConfig);
@@ -406,13 +414,9 @@
         async function initializeWishes() {
             try {
                 // Autentikasi pengguna secara anonim
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                await signInAnonymously(auth);
 
-                const wishesCollectionRef = collection(db, `/artifacts/${appId}/public/data/wishes`);
+                const wishesCollectionRef = collection(db, "wishes");
 
                 // Logika Form Submission
                 const wishForm = document.getElementById('wish-form');
@@ -448,8 +452,10 @@
                 onSnapshot(q, (querySnapshot) => {
                     wishesList.innerHTML = ''; // Kosongkan daftar sebelum memuat yang baru
                     if (querySnapshot.empty) {
-                        loadingWishes.textContent = 'Jadilah yang pertama mengirim ucapan!';
-                        wishesList.appendChild(loadingWishes);
+                        const noWishes = document.createElement('p');
+                        noWishes.className = 'text-center font-serif italic';
+                        noWishes.textContent = 'Jadilah yang pertama mengirim ucapan!';
+                        wishesList.appendChild(noWishes);
                     } else {
                         querySnapshot.forEach((doc) => {
                             const wish = doc.data();
