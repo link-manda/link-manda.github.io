@@ -16,7 +16,6 @@
     <meta property="og:image" content="https://link-manda.github.io/img/10.jpg" />
     <meta property="og:url" content="https://link-manda.github.io/" />
     <meta property="og:type" content="website" />
-    <!-- Catatan: Ganti 'https://link-manda.github.io/img/10.jpg' dengan URL lengkap gambar Anda setelah di-upload ke GitHub -->
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,12 +28,15 @@
         rel="stylesheet">
     <!-- Lightbox CSS (for photo gallery) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- AOS Library CSS (untuk animasi scroll) -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <style>
         /* Custom Styles */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #1e1e1e;
-            /* Changed default background */
             color: #d4d4d4;
         }
 
@@ -70,7 +72,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Animation */
         .fade-in {
             animation: fadeIn 1.5s ease-in-out forwards;
         }
@@ -85,7 +86,6 @@
             }
         }
 
-        /* Lightbox Customization */
         .lightbox .lb-dataContainer {
             width: 100% !important;
         }
@@ -115,264 +115,369 @@
         .custom-shape-divider-bottom-1757340777 .shape-fill {
             fill: #FFFFFF;
         }
+
+        /* Style untuk Wish List */
+        #wishes-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 
-<body class="overflow-x-hidden">
+<body>
+    <!-- Wrapper untuk mengatasi masalah AOS dengan overflow-x-hidden -->
+    <div class="overflow-x-hidden">
+        <!-- Background Music -->
+        <audio id="background-music" loop>
+            <source src="music/gus-teja.mp3" type="audio/mpeg">
+        </audio>
 
-    <!-- Background Music -->
-    <audio id="background-music" loop>
-        <source src="music/gus-teja.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Cover Section -->
-    <section id="cover"
-        class="fixed inset-0 bg-cover-image flex flex-col justify-end items-center text-center p-8 transition-opacity duration-1000 z-50">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative z-10 text-white w-full">
-            <h1 class="imperial-script-regular text-5xl md:text-7xl mb-4">Aris & Qinar</h1>
-            <p class="font-serif text-lg">Undangan Pawiwahan</p>
-            <p class=" mb-2 text-sm">Kepada Bapak/Ibu/Saudara/i</p>
-            <h2 id="guest-name" class="font-serif text-2xl font-bold mb-8 truncate">Nama Tamu</h2>
-            <button id="open-invitation"
-                class="bg-[#CFB577] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#b89249] transition-colors duration-300">
-                Buka Undangan
-            </button>
-        </div>
-        <div class="h-16"></div>
-    </section>
-
-    <!-- Main Content -->
-    <main id="main-content" class="hidden opacity-0">
-        <!-- Section 1: Opening -->
-        <section
-            class="relative min-h-screen bg-couple-image flex flex-col items-center justify-center text-center text-white p-8">
+        <!-- Cover Section -->
+        <section id="cover"
+            class="fixed inset-0 bg-cover-image flex flex-col justify-end items-center text-center p-8 transition-opacity duration-1000 z-50">
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div class="relative z-10">
-                <h2 class="imperial-script-regular text-5xl md:text-7xl">Aris & Qinar</h2>
-                <p class="font-serif text-xl mt-2">We are getting married</p>
-                <p class="font-serif text-2xl mt-4">01 / 11 / 2025</p>
+            <div class="relative z-10 text-white w-full">
+                <h1 class="imperial-script-regular text-5xl md:text-7xl mb-4">Aris & Qinar</h1>
+                <p class="font-serif text-lg">Undangan Pawiwahan</p>
+                <p class=" mb-2 text-sm">Kepada Bapak/Ibu/Saudara/i</p>
+                <h2 id="guest-name" class="font-serif text-2xl font-bold mb-8 truncate">Nama Tamu</h2>
+                <button id="open-invitation"
+                    class="bg-[#CFB577] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#b89249] transition-colors duration-300">
+                    Buka Undangan
+                </button>
             </div>
-            <!-- SVG Wave sebagai pemisah di bawah -->
-            <div class="custom-shape-divider-bottom-1757340777">
-                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                    preserveAspectRatio="none">
-                    <path
-                        d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-                        opacity=".25" class="shape-fill"></path>
-                    <path
-                        d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-                        opacity=".5" class="shape-fill"></path>
-                    <path
-                        d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
-                        class="shape-fill"></path>
+            <div class="h-16"></div>
+        </section>
+
+        <!-- Main Content -->
+        <main id="main-content" class="hidden opacity-0">
+            <!-- Section 1: Opening -->
+            <section
+                class="relative min-h-screen bg-couple-image flex flex-col items-center justify-center text-center text-white p-8">
+                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                <div class="relative z-10">
+                    <h2 class="imperial-script-regular text-5xl md:text-7xl">Aris & Qinar</h2>
+                    <p class="font-serif text-xl mt-2">We are getting married</p>
+                    <p class="font-serif text-2xl mt-4">01 / 11 / 2025</p>
+                </div>
+                <!-- SVG Wave -->
+                <div class="custom-shape-divider-bottom-1757340777">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path
+                            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                            opacity=".25" class="shape-fill"></path>
+                        <path
+                            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+                            opacity=".5" class="shape-fill"></path>
+                        <path
+                            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                            class="shape-fill"></path>
+                    </svg>
+                </div>
+            </section>
+
+            <!-- Sections: The Couple, Event Details, Countdown, Quotes, Gallery... -->
+            <!-- ... (semua section dari kode Anda sebelumnya tetap di sini) ... -->
+            <section class="py-5 px-8 text-center bg-white text-black relative z-10">
+                <div class="max-w-2xl mx-auto mb-10" data-aos="fade-up">
+                    <p class="imperial-script-regular text-4xl text-[#CFB577]">Om Swastyastu</p>
+                    <p class="mt-4 text-sm font-serif leading-relaxed">
+                        Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa, kami bermaksud
+                        mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri
+                        kami.
+                    </p>
+                </div>
+                <div class="mb-16" data-aos="fade-up">
+                    <img src="img/6.jpg" alt="Mempelai Pria"
+                        class="w-56 h-56 md:w-66 md:h-66 rounded-full mx-auto border-4 border-[#CFB577] shadow-xl">
+                    <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
+                    <h3 class="imperial-script-regular text-4xl text-[#CFB577]">Aris</h3>
+                    <h4 class="font-serif text-2xl mt-2">I Putu Aris Ciptadaras, S.Ds</h4>
+                    <p class="mt-2 font-serif italic text-sm">Putra pertama dari pasangan</p>
+                    <p class="mt-2 font-semibold font-serif">Bpk. I Kadek Muliastra & Ibu. Made Sudarmi</p>
+                    <p class="text-sm mt-1">Br. Gelulung, Ds. Sukawati, Kec. Sukawati, Kab. Gianyar</p>
+                </div>
+                <div class="text-5xl imperial-script-regular text-[#CFB577] my-8" data-aos="fade-in">&</div>
+                <div class="mb-20" data-aos="fade-up">
+                    <img src="img/4.jpg" alt="Mempelai Wanita"
+                        class="w-56 h-56 md:w-66 md:h-66 rounded-full mx-auto border-4 border-[#CFB577] shadow-xl">
+                    <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
+                    <h3 class="imperial-script-regular text-4xl text-[#CFB577]">Qinar</h3>
+                    <h4 class="font-serif text-2xl mt-2">Panji Putri Qinariati</h4>
+                    <p class="mt-2 font-serif italic text-sm">Putri ketiga dari pasangan</p>
+                    <p class="mt-2 font-semibold font-serif">Bpk. Thomy & Ibu. Ni Ketut Suartini</p>
+                    <p class="text-sm mt-1">Kota. Medan, Kec. Medan Maimun, Sumatera Utara</p>
+                </div>
+            </section>
+            <section class="py-20 px-8 text-center bg-cover-image relative">
+                <div class="absolute inset-0 bg-white bg-opacity-70"></div>
+                <div class="relative z-10 max-w-md mx-auto card p-8 rounded-2xl text-black" data-aos="fade-up">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-[#CFB577]" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                        </path>
+                    </svg>
+                    <h2 class="font-serif text-4xl">Pawiwahan</h2>
+                    <p class="font-semibold text-xl font-serif mt-4">Rabu, 01 Oktober 2025</p>
+                    <p class="font-serif text-xl">11:00 WITA - 15:00 WITA</p>
+                    <p class="mt-2">Bertempat di</p>
+                    <p class="font-semibold">Taman Prakerti Bhuana, Ds. Beng, Kec. Gianyar, Kab. Gianyar</p>
+                    <a href="https://maps.app.goo.gl/QZhzt2ukfyfgM3Nr6"
+                        class="inline-block mt-6 bg-[#CFB577] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#b89249] transition-colors duration-300">
+                        Map Lokasi Acara
+                    </a>
+                </div>
+                <div class="relative z-10 mt-8 max-w-lg mx-auto font-serif font-semibold italic text-black"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <p>Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir
+                        untuk memberikan doa restu.</p>
+                </div>
+            </section>
+            <section class="py-20 px-8 text-black text-center bg-white">
+                <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-8" data-aos="fade-up">Hari Bahagia</h2>
+                <div id="countdown" class="grid grid-cols-4 gap-4 max-w-sm mx-auto text-black" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div class="card p-4 rounded-lg bg-[#CFB577]">
+                        <div id="days" class="text-4xl font-bold font-serif">00</div>
+                        <div class="text-sm">Hari</div>
+                    </div>
+                    <div class="card p-4 rounded-lg bg-[#CFB577]">
+                        <div id="hours" class="text-4xl font-bold font-serif">00</div>
+                        <div class="text-sm">Jam</div>
+                    </div>
+                    <div class="card p-4 rounded-lg bg-[#CFB577]">
+                        <div id="minutes" class="text-4xl font-bold font-serif">00</div>
+                        <div class="text-sm">Menit</div>
+                    </div>
+                    <div class="card p-4 rounded-lg bg-[#CFB577]">
+                        <div id="seconds" class="text-4xl font-bold font-serif">00</div>
+                        <div class="text-sm">Detik</div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-16 px-8 bg-[#f7f4ef] text-center">
+                <div class="max-w-xl mx-auto" data-aos="fade-up">
+                    <p class="italic font-serif text-lg text-gray-800 mb-4">
+                        “Ihaiva stam ma vi yaustam, visvam ayur vyasnutam, kridantau putrair naptrbhih, modamanau sve
+                        grhe.”<br>
+                        <span class="font-bold">— (Rg Veda X.85.42)</span>
+                    </p>
+                    <p class="italic font-serif text-lg text-gray-800 mb-4">
+                        “Wahai pasangan suami-istri, semoga kalian tetap bersatu dan tidak pernah terpisahkan. Semoga
+                        kalian
+                        mencapai hidup penuh
+                        kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama seluruh keturunanmu.”
+                    </p>
+                    <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
+                </div>
+            </section>
+            <section class="py-20 px-4 text-center bg-white">
+                <h2 class="imperial-script-regular text-4xl mb-4 text-[#CFB577]" data-aos="fade-up">Momen Bahagia</h2>
+                <p class="max-w-xl mx-auto mb-10 font-serif text-black" data-aos="fade-up" data-aos-delay="100">Berikut
+                    adalah beberapa momen kebahagiaan kami yang ingin kami bagikan.</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 max-w-4xl mx-auto" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <a href="img/8.jpg" data-lightbox="gallery"><img src="img/8.jpg"
+                            class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity"></a>
+                    <a href="img/1.jpg" data-lightbox="gallery"><img src="img/1.jpg"
+                            class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity"></a>
+                    <a href="img/3.JPG" data-lightbox="gallery"><img src="img/3.JPG"
+                            class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity"></a>
+                    <a href="img/5.jpg" data-lightbox="gallery"><img src="img/5.jpg"
+                            class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity"></a>
+                    <a href="img/12.jpg" data-lightbox="gallery"><img src="img/12.jpg"
+                            class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity"></a>
+                    <a href="img/9.jpg" data-lightbox="gallery"><img src="img/9.jpg"
+                            class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity"></a>
+                </div>
+            </section>
+            <section class="py-20 px-8 bg-[#f7f4ef] text-center">
+                <div class="max-w-md mx-auto bg-white text-black shadow-lg rounded-2xl p-8" data-aos="fade-up">
+                    <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4">Amplop Digital</h2>
+                    <p class="mb-6 font-serif">Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.<br><br>
+                        Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado cashless melalui
+                        transfer.</p>
+                    <button onclick="openModal()"
+                        class="bg-[#cba352] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#b89249]">Kirim
+                        Amplop</button>
+                </div>
+            </section>
+
+            <!-- NEW: Section Ucapan & Doa -->
+            <section class="py-20 px-8 bg-white text-black text-center">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4" data-aos="fade-up">Ucapan & Doa
+                        Restu</h2>
+                    <p class="mb-8 font-serif" data-aos="fade-up" data-aos-delay="100">Kirimkan doa dan ucapan terbaik
+                        Anda untuk kedua mempelai.</p>
+
+                    <!-- Form Pengiriman Ucapan -->
+                    <form id="wish-form" class="text-left space-y-4 mb-12" data-aos="fade-up" data-aos-delay="200">
+                        <div>
+                            <label for="guestName" class="block mb-2 text-sm font-medium">Nama Anda</label>
+                            <input type="text" id="guestName" name="guestName"
+                                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#cba352] focus:border-[#cba352] block w-full p-2.5"
+                                placeholder="Tulis nama Anda di sini..." required>
+                        </div>
+                        <div>
+                            <label for="guestMessage" class="block mb-2 text-sm font-medium">Ucapan Anda</label>
+                            <textarea id="guestMessage" name="guestMessage" rows="4"
+                                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#cba352] focus:border-[#cba352] block w-full p-2.5"
+                                placeholder="Tulis ucapan dan doa Anda..." required></textarea>
+                        </div>
+                        <button type="submit"
+                            class="bg-[#cba352] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#b89249] transition-colors duration-300">
+                            Kirim Ucapan
+                        </button>
+                    </form>
+
+                    <!-- Daftar Ucapan -->
+                    <div id="wishes-list" class="space-y-4 text-left">
+                        <!-- Ucapan akan dimuat di sini oleh JavaScript -->
+                        <p id="loading-wishes" class="text-center font-serif italic">Memuat ucapan...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal (disembunyikan default) -->
+            <div id="amplopModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex text-center items-center justify-center hidden z-50">
+                <div class="bg-white text-black rounded-2xl max-w-sm w-full p-6 relative">
+                    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600">&times;</button>
+                    <p class="mb-4">Silahkan melakukan transfer ke rekening berikut:</p>
+                    <div class="border border-gray-300 rounded-lg p-4">
+                        <h3 class="font-bold">BCA</h3>
+                        <p>0123456789 / a/n Sdr. I Putu Aris Ciptadaras</p>
+                        <button onclick="copyText('0123456789')"
+                            class="mt-2 inline-block bg-[#cba352] text-white font-semibold py-2 px-4 rounded-full hover:bg-[#b89249]">Copy
+                            No Rekening</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ... (sisa kode HTML Anda) ... -->
+            <section class="py-16 px-8 bg-white text-center">
+                <div class="max-w-xl mx-auto" data-aos="fade-up">
+                    <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4">Matur Suksma</h2>
+                </div>
+            </section>
+            <button id="music-toggle"
+                class="fixed bottom-6 right-6 w-12 h-12 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white z-40">
+                <svg id="speaker-on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                 </svg>
-            </div>
-        </section>
-
-        <!-- Section 2: The Couple -->
-        <section class="py-5 px-8 text-center bg-white text-black relative z-10">
-            <div class="max-w-2xl mx-auto mb-10">
-                <p class="imperial-script-regular text-4xl text-[#CFB577]">Om Swastyastu</p>
-                <p class="mt-4 text-sm font-serif leading-relaxed">
-                    Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa, kami bermaksud
-                    mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri
-                    kami.
-                </p>
-            </div>
-            <div class="mb-16">
-                <img src="img/6.jpg" alt="Mempelai Pria"
-                    class="w-56 h-56 md:w-66 md:h-66 rounded-full mx-auto border-4 border-[#CFB577] shadow-xl">
-                <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
-                <h3 class="imperial-script-regular text-4xl text-[#CFB577]">Aris</h3>
-                <h4 class="font-serif text-2xl mt-2">I Putu Aris Ciptadaras, S.Ds</h4>
-                <p class="mt-2 font-serif italic text-sm">Putra pertama dari pasangan</p>
-                <p class="mt-2 font-semibold font-serif">Bpk. I Kadek Muliastra & Ibu. Made Sudarmi</p>
-                <p class="text-sm mt-1">Br. Gelulung, Ds. Sukawati, Kec. Sukawati, Kab. Gianyar</p>
-            </div>
-            <div class="text-5xl imperial-script-regular text-[#CFB577] my-8">&</div>
-            <div class="mb-20">
-                <img src="img/4.jpg" alt="Mempelai Wanita"
-                    class="w-56 h-56 md:w-66 md:h-66 rounded-full mx-auto border-4 border-[#CFB577] shadow-xl">
-                <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
-                <h3 class="imperial-script-regular text-4xl text-[#CFB577]">Qinar</h3>
-                <h4 class="font-serif text-2xl mt-2">Panji Putri Qinariati</h4>
-                <p class="mt-2 font-serif italic text-sm">Putri ketiga dari pasangan</p>
-                <p class="mt-2 font-semibold font-serif">Bpk. Thomy & Ibu. Ni Ketut Suartini</p>
-                <p class="text-sm mt-1">Kota. Medan, Kec. Medan Maimun, Sumatera Utara</p>
-            </div>
-        </section>
-
-        <!-- Section 3: Event Details -->
-        <section class="py-20 px-8 text-center bg-cover-image relative">
-            <div class="absolute inset-0 bg-white bg-opacity-70"></div>
-            <div class="relative z-10 max-w-md mx-auto card p-8 rounded-2xl text-black">
-                <svg class="w-16 h-16 mx-auto mb-4 text-[#CFB577]" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                    </path>
+                <svg id="speaker-off" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                        clip-rule="evenodd" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l-5-5m0 5l5-5" />
                 </svg>
-                <h2 class="font-serif text-4xl">Pawiwahan</h2>
-                <p class="font-semibold text-xl font-serif mt-4">Rabu, 01 Oktober 2025</p>
-                <p class="font-serif text-xl">11:00 WITA - 15:00 WITA</p>
-                <p class="mt-2">Bertempat di</p>
-                <p class="font-semibold">Taman Prakerti Bhuana, Ds. Beng, Kec. Gianyar, Kab. Gianyar</p>
-                <a href="https://maps.app.goo.gl/QZhzt2ukfyfgM3Nr6"
-                    class="inline-block mt-6 bg-[#CFB577] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#b89249] transition-colors duration-300">
-                    Map Lokasi Acara
-                </a>
-            </div>
-            <div class="relative z-10 mt-8 max-w-lg mx-auto font-serif font-semibold italic text-black">
-                <p>Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir
-                    untuk memberikan doa restu.</p>
-            </div>
-        </section>
-
-        <!-- Section 4: Countdown -->
-        <section class="py-20 px-8 text-black text-center bg-white">
-            <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-8">Hari Bahagia</h2>
-            <div id="countdown" class="grid grid-cols-4 gap-4 max-w-sm mx-auto text-black">
-                <div class="card p-4 rounded-lg bg-[#CFB577]">
-                    <div id="days" class="text-4xl font-bold font-serif">00</div>
-                    <div class="text-sm">Hari</div>
-                </div>
-                <div class="card p-4 rounded-lg bg-[#CFB577]">
-                    <div id="hours" class="text-4xl font-bold font-serif">00</div>
-                    <div class="text-sm">Jam</div>
-                </div>
-                <div class="card p-4 rounded-lg bg-[#CFB577]">
-                    <div id="minutes" class="text-4xl font-bold font-serif">00</div>
-                    <div class="text-sm">Menit</div>
-                </div>
-                <div class="card p-4 rounded-lg bg-[#CFB577]">
-                    <div id="seconds" class="text-4xl font-bold font-serif">00</div>
-                    <div class="text-sm">Detik</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Quotes Section -->
-        <section class="py-16 px-8 bg-[#f7f4ef] text-center">
-            <div class="max-w-xl mx-auto">
-                <p class="italic font-serif text-lg text-gray-800 mb-4">
-                    “Ihaiva stam ma vi yaustam, visvam ayur vyasnutam, kridantau putrair naptrbhih, modamanau sve
-                    grhe.”<br>
-                    <span class="font-bold">— (Rg Veda X.85.42)</span>
-                </p>
-                <p class="italic font-serif text-lg text-gray-800 mb-4">
-                    “Wahai pasangan suami-istri, semoga kalian tetap bersatu dan tidak pernah terpisahkan. Semoga kalian
-                    mencapai hidup penuh
-                    kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama seluruh keturunanmu.”
-                </p>
-                <img src="img/mempelai-bunga.png" alt="floral" class="w-40 mx-auto my-4 opacity-80">
-            </div>
-        </section>
-
-        <!-- NEW: Photo Gallery Section -->
-        <section class="py-20 px-4 text-center bg-white">
-            <h2 class="imperial-script-regular text-4xl mb-4 text-[#CFB577]">Momen Bahagia</h2>
-            <p class="max-w-xl mx-auto mb-10 font-serif text-black">Berikut adalah beberapa momen kebahagiaan kami yang
-                ingin kami bagikan.
-            </p>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 max-w-4xl mx-auto">
-                <a href="img/8.jpg" data-lightbox="gallery">
-                    <img src="img/8.jpg"
-                        class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity">
-                </a>
-                <a href="img/1.jpg" data-lightbox="gallery">
-                    <img src="img/1.jpg"
-                        class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity">
-                </a>
-                <a href="img/3.JPG" data-lightbox="gallery">
-                    <img src="img/3.JPG"
-                        class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity">
-                </a>
-                <a href="img/5.jpg" data-lightbox="gallery">
-                    <img src="img/5.jpg"
-                        class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity">
-                </a>
-                <a href="img/12.jpg" data-lightbox="gallery">
-                    <img src="img/12.jpg"
-                        class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity">
-                </a>
-                <a href="img/9.jpg" data-lightbox="gallery">
-                    <img src="img/9.jpg"
-                        class="rounded-lg w-full h-full object-cover hover:opacity-80 transition-opacity">
-                </a>
-            </div>
-        </section>
-
-        <!-- Section Amplop Digital -->
-        <section class="py-20 px-8 bg-[#f7f4ef] text-center">
-            <div class="max-w-md mx-auto bg-white text-black shadow-lg rounded-2xl p-8">
-                <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4">Amplop Digital</h2>
-                <p class="mb-6 font-serif">Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.<br><br>
-                    Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado cashless melalui
-                    transfer.</p>
-                <button onclick="openModal()"
-                    class="bg-[#cba352] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#b89249]">Kirim
-                    Amplop</button>
-            </div>
-        </section>
-
-        <!-- Modal (disembunyikan default) -->
-        <div id="amplopModal"
-            class="fixed inset-0 bg-black bg-opacity-50 flex text-center items-center justify-center hidden z-50">
-            <div class="bg-white text-black rounded-2xl max-w-sm w-full p-6 relative">
-                <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600">&times;</button>
-                <p class="mb-4">Silahkan melakukan transfer ke rekening berikut:</p>
-                <!-- Daftar rekening yang sama bisa ditampilkan ulang di sini -->
-                <div class="border border-gray-300 rounded-lg p-4">
-                    <h3 class="font-bold">BCA</h3>
-                    <p>0123456789 / a/n Sdr. I Putu Aris Ciptadaras</p>
-                    <button onclick="copyText('0123456789')"
-                        class="mt-2 inline-block bg-[#cba352] text-white font-semibold py-2 px-4 rounded-full hover:bg-[#b89249]">Copy
-                        No Rekening</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quotes Section -->
-        <section class="py-16 px-8 bg-white text-center">
-            <div class="max-w-xl mx-auto">
-                <h2 class="imperial-script-regular text-4xl text-[#CFB577] mb-4">Matur Suksma</h2>
-            </div>
-        </section>
-
-        <!-- Music Control Button -->
-        <button id="music-toggle"
-            class="fixed bottom-6 right-6 w-12 h-12 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white z-40">
-            <svg id="speaker-on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-            </svg>
-            <svg id="speaker-off" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-                    clip-rule="evenodd" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l-5-5m0 5l5-5" />
-            </svg>
-        </button>
-    </main>
+            </button>
+        </main>
+    </div>
 
     <!-- Lightbox JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
-    <script>
-        function copyText(text) {
-            navigator.clipboard.writeText(text).then(() => alert('Nomor rekening disalin'));
+
+    <!-- AOS Library JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import fungsi yang diperlukan dari Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Konfigurasi Firebase Anda akan secara otomatis disediakan di sini
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Fungsi utama untuk fitur ucapan
+        async function initializeWishes() {
+            try {
+                // Autentikasi pengguna secara anonim
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                const wishesCollectionRef = collection(db, `/artifacts/${appId}/public/data/wishes`);
+
+                // Logika Form Submission
+                const wishForm = document.getElementById('wish-form');
+                wishForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const guestName = document.getElementById('guestName').value;
+                    const guestMessage = document.getElementById('guestMessage').value;
+
+                    if (guestName.trim() === '' || guestMessage.trim() === '') {
+                        alert('Nama dan ucapan tidak boleh kosong!');
+                        return;
+                    }
+
+                    try {
+                        await addDoc(wishesCollectionRef, {
+                            name: guestName,
+                            message: guestMessage,
+                            timestamp: serverTimestamp()
+                        });
+                        wishForm.reset();
+                    } catch (error) {
+                        console.error("Error adding document: ", error);
+                        alert('Terjadi kesalahan saat mengirim ucapan.');
+                    }
+                });
+
+                // Menampilkan Ucapan (Real-time)
+                const wishesList = document.getElementById('wishes-list');
+                const loadingWishes = document.getElementById('loading-wishes');
+
+                const q = query(wishesCollectionRef, orderBy('timestamp', 'desc'));
+                onSnapshot(q, (querySnapshot) => {
+                    wishesList.innerHTML = ''; // Kosongkan daftar sebelum memuat yang baru
+                    if (querySnapshot.empty) {
+                        loadingWishes.textContent = 'Jadilah yang pertama mengirim ucapan!';
+                        wishesList.appendChild(loadingWishes);
+                    } else {
+                        querySnapshot.forEach((doc) => {
+                            const wish = doc.data();
+                            const wishElement = document.createElement('div');
+                            wishElement.className = 'bg-gray-100 p-4 rounded-lg shadow';
+                            wishElement.innerHTML = `
+                                <p class="font-bold text-md text-[#cba352]">${wish.name}</p>
+                                <p class="text-gray-700 mt-1">${wish.message}</p>
+                            `;
+                            wishesList.appendChild(wishElement);
+                        });
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase initialization error: ", error);
+                document.getElementById('loading-wishes').textContent = 'Fitur ucapan tidak dapat dimuat.';
+            }
         }
-        function openModal() {
-            document.getElementById('amplopModal').classList.remove('hidden');
-        }
-        function closeModal() {
-            document.getElementById('amplopModal').classList.add('hidden');
-        }
+
+        // Panggil fungsi inisialisasi setelah halaman dimuat
+        initializeWishes();
     </script>
+
     <script>
+        // ... (kode JavaScript Anda yang sudah ada sebelumnya tetap di sini) ...
         document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({ duration: 800, once: true });
             const urlParams = new URLSearchParams(window.location.search);
             const guest = urlParams.get('untuk');
             if (guest) {
@@ -380,12 +485,10 @@
             } else {
                 document.getElementById('guest-name').textContent = "Tamu Undangan";
             }
-
             const openButton = document.getElementById('open-invitation');
             const coverSection = document.getElementById('cover');
             const mainContent = document.getElementById('main-content');
             const music = document.getElementById('background-music');
-
             openButton.addEventListener('click', function () {
                 coverSection.style.opacity = '0';
                 setTimeout(() => {
@@ -395,7 +498,6 @@
                 }, 1000);
                 music.play().catch(e => console.log("Autoplay blocked"));
             });
-
             const targetDate = new Date('Oct 01, 2025 11:00:00').getTime();
             const countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
@@ -411,7 +513,6 @@
                 document.getElementById('minutes').textContent = format(Math.floor((distance % 3600000) / 60000));
                 document.getElementById('seconds').textContent = format(Math.floor((distance % 60000) / 1000));
             }, 1000);
-
             const musicToggle = document.getElementById('music-toggle');
             const speakerOn = document.getElementById('speaker-on');
             const speakerOff = document.getElementById('speaker-off');
@@ -426,13 +527,11 @@
                     speakerOff.classList.remove('hidden');
                 }
             });
-
-            // Lightbox Options
-            lightbox.option({
-                'resizeDuration': 200,
-                'wrapAround': true
-            });
+            lightbox.option({ 'resizeDuration': 200, 'wrapAround': true });
         });
+        function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('Nomor rekening disalin')); }
+        function openModal() { document.getElementById('amplopModal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('amplopModal').classList.add('hidden'); }
     </script>
 </body>
 
